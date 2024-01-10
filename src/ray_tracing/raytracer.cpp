@@ -16,15 +16,15 @@ void raytracer::render(sf::Uint8 *framebuffer, Display &display, int y_min, int 
             {
                 return;
             }
-
             vec3 pixel_color = vec3();
+
             for(int i = 0; i < samples_per_pixel;i++) {
-                Ray ray = camera.getRay(x, y);
+                Ray ray = camera.getRayWithOffset(x, y);
                 pixel_color += ray_color(ray, 0, currentScene);
             }
             double scale = 1.0 / samples_per_pixel;
             pixel_color = scale * pixel_color;
-            pixel_color = vec3::sqrt(pixel_color);
+            //pixel_color = vec3::sqrt(pixel_color);
             pixel_color = vec3::clamp(pixel_color, 0.0, 1.0);
             int currentPos = display.getFramebufferPos(x, y);
             framebuffer[currentPos] = pixel_color.x * 255;     // Red
@@ -51,10 +51,6 @@ vec3 raytracer::ray_color(const Ray &r, int currentDepth, Scene currentScene)
     if (currentScene.hit(r,0.001 ,t, rec))
     {
         return rec.hit_color;
-    //     vec3 surfaceNormal = hitObject->getSurfaceNormal(p_hit);
-    //     vec3 pointonSphere = p_hit + surfaceNormal.normalize() + tempVec3.random_unit_vector();
-    //     Ray ray = Ray(p_hit, pointonSphere - p_hit);
-    //     return 0.5 * ray_color(ray, objects, ++currentDeppth);
     }
     t = 0.5 * (r.direction().y + 1.0);
     vec3 hitColor = (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);

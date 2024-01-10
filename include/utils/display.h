@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <numeric>
 
 class Display
 {
@@ -14,7 +15,8 @@ public:
     {
         m_window_width = window_width;
         m_window_height = window_height;
-        m_aspect_ratio = (float) window_width / (float)window_height;
+        int gcd = std::gcd(window_width, window_height);
+        m_aspect_ratio = (window_width / gcd) / (window_height / gcd);
     }
 
     Display(int window_width, float aspect_ratio)

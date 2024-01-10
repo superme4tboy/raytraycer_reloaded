@@ -27,9 +27,10 @@ public:
 
     Ray getRayWithOffset(int x, int y)
     {
-        double randomNumber = random.getRandom();
-        double u = l + (r- l) * (x + randomNumber) / display_width;
-        double v = t + (b - t) * (y + randomNumber) / display_height;
+        double randomNumberX = random.getRandom();
+        double randomNumberY = random.getRandom();
+        double u = l + (r- l) * (x + randomNumberX) / display_width;
+        double v = t + (b - t) * (y + randomNumberY) / display_height;
         vec3 rayDirection = vec3::normalize(vec3(u,v, -d) - cameraPos);
         Ray ray = Ray(cameraPos,rayDirection);
         return ray;

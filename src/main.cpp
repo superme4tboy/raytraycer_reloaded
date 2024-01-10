@@ -16,7 +16,7 @@
 #include <assert.h>
 #include <cstring>
 
-#include "utils/thread_pool.hpp"
+#include "thread_pool.hpp"
 #include "display.h"
 #include "ray_tracing/firstSample.cpp"
 #include "raytracer.h"

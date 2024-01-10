@@ -1,20 +1,20 @@
-#pragma once
 #include <random>
+#include <chrono>
 
-class Random
-{
+class Random {
 private:
     std::default_random_engine generator;
     std::uniform_real_distribution<double> distribution;
 
 public:
-    Random() : distribution(0.0, 1.0)
-    {
-        std::uniform_real_distribution<double> distribution(0.1, 1.0);
+    Random() : distribution(0.0, 1.0) {
+        auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+        generator.seed(seed);
     }
     
-    Random(float min,float max) : distribution(min,max) {
-        std::uniform_real_distribution<double> distribution(min, max);
+    Random(float min, float max) : distribution(min, max) {
+        auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+        generator.seed(seed);
     }
 
     double getRandom() {

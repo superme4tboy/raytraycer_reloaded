@@ -14,28 +14,28 @@ public:
         vec3 oc = ray.origin() - center;
         double a = vec3::dot(ray.direction(), ray.direction());
         double half_b = vec3::dot(oc, vec3::normalize(ray.direction()));
-        double b = half_b * 2;
 
         double c = oc.length_squared() - radius * radius;
 
-        double discriminant = (b*b) - 4 * a * c;
+        double discriminant = half_b * half_b - a * c;
         if (discriminant < 0)
             return false;
         auto sqrtd = std::sqrt(discriminant);
 
         // Find the nearest root that lies in the acceptable range.
-        auto root = -b - sqrtd / (2*a);
+        auto root = (-half_b - sqrtd) / a;
         if (root < t_min || t_closest_so_far < root)
         {
-            root = (-b + sqrtd) / (2*a);
+            root = (-half_b + sqrtd) / a;
             if (root < t_min || t_closest_so_far < root)
                 return false;
         }
         double t = root; //- std::pow(10, -7);
         hitRecord.t = t;
         hitRecord.p = ray.at(root);
-        hitRecord.normal = (hitRecord.p - center) / radius;
-        hitRecord.hit_color = 0.5*(hitRecord.normal + vec3(1));
+        vec3 outward_normal = (hitRecord.p - center) / radius;
+        hitRecord.set_face_normal(ray, outward_normal);
+        hitRecord.hit_color = object_color;
         return true;
     }
 

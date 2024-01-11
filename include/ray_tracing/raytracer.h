@@ -11,8 +11,8 @@
 class raytracer
 {
 private:
-    const int MAX_DEPTH = 5;
-    const int samples_per_pixel = 5;
+    const int MAX_DEPTH = 1000;
+    const int samples_per_pixel = 50;
 
 public:
     raytracer() = default;

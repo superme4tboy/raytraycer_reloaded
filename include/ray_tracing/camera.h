@@ -18,7 +18,6 @@ private:
     const int display_width;
     vec3 cameraPos;
     Random random;
-
 public:
     Camera(Display display)
     : aspect_ratio(display.getDisplayRatio()),l(-1. * aspect_ratio),r(+1. * aspect_ratio),b(-1.),t(+1.),d(+1.),cameraPos(0,0,0),

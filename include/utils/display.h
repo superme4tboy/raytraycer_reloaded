@@ -6,8 +6,8 @@ class Display
 {
 private:
     double m_aspect_ratio{};
-    int m_window_height{};
-    int m_window_width{};
+    double m_window_height{};
+    double m_window_width{};
 
 public:
 
@@ -15,7 +15,7 @@ public:
     {
         m_window_width = window_width;
         m_window_height = window_height;
-        int gcd = std::gcd(window_width, window_height);
+        double gcd = std::gcd(window_width, window_height);
         m_aspect_ratio = (window_width / gcd) / (window_height / gcd);
     }
 

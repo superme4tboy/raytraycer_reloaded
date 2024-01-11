@@ -17,24 +17,36 @@ std::vector<std::shared_ptr<SceneObject>> Scene::create_scene_objects() {
     {
         const vec3 pos(0,-100.5,-1);
         const double radius = 100;
-        const vec3 color(0.49,1.0,0.5);
-        objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, color)));
-    }
-
-    {
-        const vec3 pos(0,1.4,-1);
-        const double radius = 0.5;
-        const vec3 color(0.0,0.0,1.0);
-        objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, color)));
+        objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, material_ground)));
     }
 
     {
         //muesste pos(0,0,-1) sein siehe kapitel ueber antialiasing
         const vec3 pos(0,0,-1);
         const double radius = 0.5;
-        const vec3 color(1.0,0.0,0.0);
-        objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, color)));
+        objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, material_center)));
     }
+
+    {
+        const vec3 pos(-1,0,-1);
+        const double radius = 0.4;
+        objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, material_left)));
+    }
+
+    {
+        const vec3 pos(1,0,-1);
+        const double radius = 0.5;
+        objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, material_right)));
+    }
+
+    // {
+    //     const vec3 pos(0,1.4,-1);
+    //     const double radius = 0.5;
+    //     const vec3 color(0.0,0.0,1.0);
+    //     objects.push_back(std::shared_ptr<SceneObject>(std::make_shared<Sphere>(pos, radius, color)));
+    // }
+
+    
     
     return objects;
 }

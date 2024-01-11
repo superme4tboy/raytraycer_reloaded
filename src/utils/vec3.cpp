@@ -25,7 +25,7 @@ vec3 vec3::operator+(const vec3 &other) const
     return vec3(x + other.x, y + other.y, z + other.z);
 }
 
-vec3 &vec3::operator+=(const vec3 &other)
+vec3 vec3::operator+=(const vec3 &other)
 {
     x += other.x;
     y += other.y;
@@ -33,7 +33,7 @@ vec3 &vec3::operator+=(const vec3 &other)
     return *this;
 }
 
-vec3 &vec3::operator+=(const double scalar)
+vec3 vec3::operator+=(const double scalar)
 {
     x += scalar;
     y += scalar;
@@ -116,6 +116,32 @@ vec3 vec3::random_in_unit_sphere()
 vec3 vec3::random_unit_vector()
 {
     return vec3::normalize(random_in_unit_sphere());
+}
+
+vec3 vec3::random_on_hemisphere(const vec3& normal) {
+    vec3 on_unit_sphere = random_unit_vector();
+    if (dot(on_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+        return on_unit_sphere;
+    else
+        return -on_unit_sphere;
+}
+
+bool vec3::near_zero() const
+{
+    // Return true if the vector is close to zero in all dimensions.
+    const auto s = 1e-8;
+    return (fabs(x) < s) && (fabs(y) < s) && (fabs(z) < s);
+}
+
+vec3 vec3::reflect(const vec3& normal) const {
+    return *this - 2 * dot(*this, normal) * normal;
+}
+
+vec3 vec3::refract(const vec3& normal, double etai_over_etat) const {
+    auto cos_theta = fmin(dot(-*this, normal), 1.0);
+    vec3 r_out_perp = etai_over_etat * (*this + cos_theta * normal);
+    vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * normal;
+    return r_out_perp + r_out_parallel;
 }
 
 double vec3::dot(const vec3 &v, const vec3 &other)

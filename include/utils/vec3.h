@@ -31,9 +31,9 @@ public:
 
     vec3 operator/(double scalar) const;
 
-    vec3& operator+=(const vec3& other);
+    vec3 operator+=(const vec3& other);
 
-    vec3& operator+=(const double scalar);
+    vec3 operator+=(const double scalar);
 
     bool operator!=(const vec3& other) const;
 
@@ -43,13 +43,18 @@ public:
 
     std::ostream &operator<<(std::ostream &os) const;
 
+    bool near_zero() const;
+    vec3 reflect(const vec3& normal) const;
+    vec3 refract(const vec3& normal, double etai_over_etat) const;
     void print() const;
     //remove later
-    vec3 random_in_unit_sphere();
-    vec3 random_unit_vector();
+    static vec3 random_in_unit_sphere();
+    static vec3 random_unit_vector();
     static vec3 randomVec3();
     static vec3 randomVec3(double min, double max);
+    static vec3 random_on_hemisphere(const vec3& normal);
     //end remove later
+
 
     static double dot(const vec3& v, const vec3& other);
     static vec3 normalize(const vec3& v);
